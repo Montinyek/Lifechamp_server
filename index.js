@@ -58,6 +58,20 @@ app.put(`/updateUser/:id`, async (req, res) => {
     }
 })
 
+app.get('/validID/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        let user = await UserModel.findOne({_id: id})
+        if (user) {
+            res.status(200).json({message: "valid user"})
+        } else {
+            res.status(404).json({message: "invalid user"})
+        }
+    } catch(error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
